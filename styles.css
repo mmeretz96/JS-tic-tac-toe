@@ -1,0 +1,84 @@
+:root{
+  --main-bg-color: #264653;
+  --sec-bg-color: white;
+  --font-color: #E76F51;
+  --border: 3px solid black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body{
+  margin: 0;
+  padding: 0;
+  background-color: var(--sec-bg-color);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header{
+  height: 100px;
+  background-color: var(--main-bg-color);
+  color: var(--font-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bold;
+  word-spacing: -0.1em;
+}
+
+h1{
+  margin: 0;
+}
+
+.cell{
+  box-sizing: border-box;
+}
+
+.main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.board{
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+  height: 500px;
+}
+
+.cell{
+  width: 33.3%;
+  height: 33.3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 2em;
+}
+
+.cell:hover{
+  cursor: pointer;
+}
+
+.cell:nth-child(3n){
+  border-left: var(--border);
+}
+
+.cell:nth-child(3n-2){
+  border-right: var(--border);;
+}
+
+.cell:nth-child(-n+3){
+  border-bottom: var(--border);;
+}
+.cell:nth-child(n+7){
+  border-top: var(--border);;
+}
+
+.marker{
+  height: 100%;
+}
+
+
