@@ -57,6 +57,9 @@ h1{
   justify-content: center;
   box-sizing: border-box;
   padding: 2em;
+  background-size: 33%;
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 
 .cell:hover{
@@ -83,4 +86,52 @@ h1{
   -webkit-user-drag: none;
 }
 
+.controls{
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 300px;
+}
 
+.reset{
+  border: none;
+  padding: 1em;
+  background-color: var(--main-bg-color);
+  color: var(--font-color);
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.reset:hover{
+  cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+
+.messageBox{
+  margin-top: 1em;
+  font-size: 20px;
+  width: 100%;
+  padding: 1em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: white;
+  border-radius: 5px;
+  filter: opacity(0.4);
+}
+
+.hoverMarker{
+  filter: opacity(0.3);
+}
+
+@media (max-width: 600px) {
+  .board {
+    width: 300px;
+    height: 300px;
+  }
+}

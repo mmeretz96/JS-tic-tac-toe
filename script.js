@@ -43,10 +43,16 @@ const DomController = ((()=>{
     })
   }
 
+  const displayMessage = (message, color) => {
+    const messageBox = document.querySelector(".messageBox")
+    messageBox.innerHTML = message
+    messageBox.style.backgroundColor = color
+  }
   
   return{
     displayCells,
-    placeMarker
+    placeMarker,
+    displayMessage
   }
 }))()
 
@@ -69,12 +75,15 @@ const Gameboard = (() => {
     return true
   }
 
+  const getCell = (pos) => cells[pos]
+
   const getCells = () => cells
   init()
   return{
     getCells,
     placeMarker,
-    init
+    init,
+    getCell
   }
 })();
 
@@ -95,10 +104,22 @@ const GameController = (() => {
       cell.addEventListener("click", e => {
         if (!Gameboard.placeMarker(e.target.getAttribute("data-number") , activePlayer.marker)){
           //Add Error message here
+          DomController.displayMessage("Cell is occupied already!", "#440044")
           log("error")
           return
         }
         switchActivePlayer()
+        DomController.displayMessage(activePlayer.name + "'s turn!" , "green")
+      })
+
+      cell.addEventListener("mouseover", e => {
+        const boardCell = Gameboard.getCell(e.target.getAttribute("data-number"))
+        if(boardCell.getMarker()) return
+        e.target.style.backgroundImage = `url(images/${activePlayer.marker}.png)` 
+      })
+
+      cell.addEventListener("mouseout", e => {
+        e.target.style.backgroundImage = ``
       })
     })
   }
@@ -117,6 +138,7 @@ const GameController = (() => {
 
 
 GameController.init()
+DomController.displayMessage("hi", "green")
 
 
 
