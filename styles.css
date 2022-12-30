@@ -36,6 +36,7 @@ h1{
 
 .main{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex: 1;
@@ -79,6 +80,7 @@ h1{
 
 .marker{
   height: 100%;
+  -webkit-user-drag: none;
 }
 
 

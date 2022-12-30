@@ -16,9 +16,9 @@ const CellFactory = () => {
     setMarker
   }
 }
+
 const DomController = ((()=>{
   const boardContainer = document.querySelector(".board")
-
   const displayCells = () => {
     boardContainer.innerHTML = ""
     for(let i = 0; i<9; i++){
@@ -43,11 +43,14 @@ const DomController = ((()=>{
     })
   }
 
+  
   return{
     displayCells,
     placeMarker
   }
 }))()
+
+
 
 const Gameboard = (() => {
   let cells = []
@@ -67,7 +70,6 @@ const Gameboard = (() => {
   }
 
   const getCells = () => cells
-
   init()
   return{
     getCells,
@@ -81,12 +83,14 @@ const Gameboard = (() => {
 const GameController = (() => {
   let players = [{num: 0, name: "player", marker: "x"}, {num: 1, name: "computer", marker: "o"}]
   let activePlayer = players[0]
+
   const switchActivePlayer = () => {
     activePlayer = players[(activePlayer.num+1)%2]
     log(activePlayer)
   }
 
   const init = () => {
+    DomController.displayCells()
     document.querySelectorAll(".cell").forEach(cell => {
       cell.addEventListener("click", e => {
         if (!Gameboard.placeMarker(e.target.getAttribute("data-number") , activePlayer.marker)){
@@ -98,6 +102,12 @@ const GameController = (() => {
       })
     })
   }
+
+  document.querySelector(".reset").addEventListener("click", e => {
+    Gameboard.init()
+    init()
+  })
+
   return {
     switchActivePlayer,
     init
@@ -105,7 +115,7 @@ const GameController = (() => {
  })()
 
 
-DomController.displayCells()
+
 GameController.init()
 
 
