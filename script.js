@@ -31,7 +31,6 @@ const DomController = ((()=>{
 
   const placeMarker = (pos, marker) => {
     cells = document.querySelectorAll(".cell")
-    log(cells)
     cells.forEach((cell, index) => {
       if(pos == index){
         const img = document.createElement("img")
@@ -60,7 +59,9 @@ const DomController = ((()=>{
 
 const Gameboard = (() => {
   let cells = []
-  
+  const winCombinations = [
+    [0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]
+  ]
   const init = () => {
     cells = []
     for(let i = 0; i<9; i++){
@@ -75,12 +76,26 @@ const Gameboard = (() => {
     return true
   }
 
+  const getWinCombination = (pos) => {
+   winCombinations.forEach(combination => {
+    log(combination.includes(pos))
+    if(combination.includes(pos)){
+    const markers = []
+    combination.forEach(p => {
+      markers.push(getCell(p).getMarker())
+    })
+    log(markers)
+    }
+   })
+  }
+
   const getCell = (pos) => cells[pos]
 
   const getCells = () => cells
   init()
   return{
     getCells,
+    getWinCombination,
     placeMarker,
     init,
     getCell
@@ -95,21 +110,14 @@ const GameController = (() => {
 
   const switchActivePlayer = () => {
     activePlayer = players[(activePlayer.num+1)%2]
-    log(activePlayer)
+    DomController.displayMessage(activePlayer.name + "'s turn!" , "green")
   }
 
   const init = () => {
     DomController.displayCells()
     document.querySelectorAll(".cell").forEach(cell => {
       cell.addEventListener("click", e => {
-        if (!Gameboard.placeMarker(e.target.getAttribute("data-number") , activePlayer.marker)){
-          //Add Error message here
-          DomController.displayMessage("Cell is occupied already!", "#440044")
-          log("error")
-          return
-        }
-        switchActivePlayer()
-        DomController.displayMessage(activePlayer.name + "'s turn!" , "green")
+       handleCellClick(e.target)
       })
 
       cell.addEventListener("mouseover", e => {
@@ -123,6 +131,21 @@ const GameController = (() => {
       })
     })
   }
+
+  const handleCellClick = (cell) =>{
+    cell.style.backgroundImage = ``
+    if (!Gameboard.placeMarker(cell.getAttribute("data-number") , activePlayer.marker)){
+      DomController.displayMessage("Cell is occupied already!", "#440044")
+      return
+    }
+
+    //check for win
+    Gameboard.getWinCombination(cell.getAttribute("data-number"))
+    switchActivePlayer()
+
+  }
+
+
 
   document.querySelector(".reset").addEventListener("click", e => {
     Gameboard.init()
@@ -138,7 +161,6 @@ const GameController = (() => {
 
 
 GameController.init()
-DomController.displayMessage("hi", "green")
 
 
 

@@ -135,3 +135,13 @@ h1{
     height: 300px;
   }
 }
+
+@media (max-width: 1500px) {
+  .board {
+    width: 350px;
+    height: 350px;
+  }
+  header{
+    height: 80px;
+  }
+}
